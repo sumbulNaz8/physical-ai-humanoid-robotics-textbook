@@ -1,0 +1,91 @@
+openapi: 3.0.0
+info:
+  title: AI-Native Humanoid Robotic Book Chatbot API
+  version: 1.0.0
+  description: API for the RAG-based chatbot, supporting selected text and full document queries.
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+
+paths:
+  /query:
+    post:
+      summary: Query the chatbot for answers based on textbook content.
+      description: |
+        Submits a natural language question to the chatbot.
+        If `selected_text` is provided, the chatbot will answer strictly from that text.
+        Otherwise, it will perform RAG (Retrieval Augmented Generation) over the entire textbook content.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Successful response with the chatbot's answer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+        '400':
+          description: Bad Request - Invalid input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error - An unexpected error occurred on the server.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    QueryRequest:
+      type: object
+      required:
+        - question
+      properties:
+        question:
+          type: string
+          description: The natural language question from the user.
+          example: "What is ROS 2?"
+        selected_text:
+          type: string
+          nullable: true
+          description: Optional. A segment of text selected by the user from the textbook to constrain the answer.
+          maxLength: 500
+          example: "ROS 2 is a set of software libraries and tools that help you build robot applications."
+
+    QueryResponse:
+      type: object
+      required:
+        - answer
+      properties:
+        answer:
+          type: string
+          description: The chatbot's generated answer to the query.
+          example: "ROS 2 (Robot Operating System 2) is an open-source framework for robot development..."
+        source_chunks:
+          type: array
+          description: Optional. A list of relevant text chunks (or their IDs/titles) used to formulate the answer in RAG mode.
+          items:
+            type: string
+          example: ["ROS 2 Introduction", "ROS 2 Concepts - Nodes and Topics"]
+
+    ErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: A human-readable error message.
+          example: "Invalid input: question parameter is required."
+        code:
+          type: string
+          description: An optional error code for programmatic handling.
+          example: "ERR_INVALID_INPUT"
