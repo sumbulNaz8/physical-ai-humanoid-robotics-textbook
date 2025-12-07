@@ -599,3 +599,61 @@ table th, table td {
 .markdown a:hover {
   color: var(--custom-gold) !important;
 }
+
+/* Dropdown arrow styling - making it white */
+.menu__list-item-collapsible .menu__link::after,
+.menu__caret::before {
+  background: #ffffff !important; /* White dropdown arrow */
+}
+
+/* Alternative styling for dropdown icons */
+.menu__link--sublist::after {
+  background: #ffffff !important; /* White dropdown arrow */
+}
+
+/* Ensure all dropdown icons are white */
+.menu__link--sublist-caret::after,
+.treeview__item .treeview__item::before {
+  background: #ffffff !important; /* White dropdown arrow */
+}
+
+/* Override any other potential dropdown arrow styling */
+.collapsible-sidebar .menu__link::after,
+.menu__sublist-caret .menu__link::after {
+  background: #ffffff !important; /* White dropdown arrow */
+}
+
+/* Footer styling - black background */
+.footer {
+  background-color: var(--custom-black) !important;
+  color: var(--custom-gold) !important;
+  border-top: 1px solid rgba(251, 191, 36, 0.3) !important;
+}
+
+.footer__title {
+  color: var(--custom-gold) !important;
+}
+
+.footer__item {
+  color: var(--custom-gold) !important;
+}
+
+.footer__link {
+  color: var(--custom-gold) !important;
+}
+
+.footer__link:hover {
+  color: var(--custom-gold-light) !important;
+}
+
+/* Footer links styling */
+.footer__links {
+  background-color: var(--custom-black) !important;
+}
+
+/* Footer copyright */
+.footer__copyright {
+  color: #9ca3af !important; /* Light gray for readability */
+  background-color: #000000 !important; /* Black background */
+  border-top: 1px solid rgba(251, 191, 36, 0.1) !important;
+}

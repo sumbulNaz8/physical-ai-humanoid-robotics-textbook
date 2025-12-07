@@ -3,11 +3,6 @@
  */
 const sidebars = {
   tutorialSidebar: [
-    'roadmap',
-    'glossary',
-    'references',
-    'index-page',
-    'credits',
     {
       type: 'category',
       label: '01 - Introduction to Physical AI',
@@ -106,6 +101,18 @@ const sidebars = {
         'projects/index'
       ],
       collapsed: false
+    },
+    {
+      type: 'category',
+      label: 'Resources',
+      items: [
+        'roadmap',
+        'glossary',
+        'references',
+        'index-page',
+        'credits'
+      ],
+      collapsed: true
     }
   ],
 };

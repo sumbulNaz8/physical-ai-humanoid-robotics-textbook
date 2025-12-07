@@ -38,7 +38,7 @@ function ChapterCard({ title, lessons, outcomes, chapterNumber, onClick }) {
     border: '1px solid rgba(251, 191, 36, 0.3)',
     color: '#d1d5db',
     transition: 'all 0.3s ease',
-    cursor: 'pointer'
+    cursor: 'default' /* Changed from pointer to default since we have a specific button now */
   };
 
   const titleStyle = {
@@ -60,9 +60,42 @@ function ChapterCard({ title, lessons, outcomes, chapterNumber, onClick }) {
     fontWeight: '500'
   };
 
+  // Determine the URL based on chapter number
+  let chapterUrl = '';
+  switch(chapterNumber) {
+    case 1:
+      chapterUrl = '/introduction/';
+      break;
+    case 2:
+      chapterUrl = '/ros2/';
+      break;
+    case 3:
+      chapterUrl = '/simulation/';
+      break;
+    case 4:
+      chapterUrl = '/nvidia-isaac/';
+      break;
+    default:
+      chapterUrl = '/';
+  }
+
+  const linkStyle = {
+    display: 'inline-block',
+    marginTop: '1.5rem',
+    padding: '0.5rem 1.5rem',
+    background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+    color: '#000000',
+    textDecoration: 'none',
+    fontWeight: '600',
+    borderRadius: '6px',
+    fontSize: '0.9rem',
+    transition: 'all 0.3s ease',
+    border: 'none'
+  };
+
   return (
-    <div 
-      className="chapter-card" 
+    <div
+      className="chapter-card"
       style={cardStyle}
       onMouseEnter={(e) => {
         e.target.style.boxShadow = colorConfig.boxShadow;
@@ -72,7 +105,6 @@ function ChapterCard({ title, lessons, outcomes, chapterNumber, onClick }) {
         e.target.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
         e.target.style.transform = 'translateY(0)';
       }}
-      onClick={onClick}
     >
       <div className="chapter-card__header">
         <h3 className="chapter-card__title" style={titleStyle}>{title}</h3>
@@ -89,6 +121,20 @@ function ChapterCard({ title, lessons, outcomes, chapterNumber, onClick }) {
           ))}
         </ul>
       </div>
+      <Link
+        to={chapterUrl}
+        style={linkStyle}
+        onMouseEnter={(e) => {
+          e.target.style.transform = 'translateY(-2px)';
+          e.target.style.boxShadow = '0 4px 10px rgba(251, 191, 36, 0.3)';
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.transform = 'translateY(0)';
+          e.target.style.boxShadow = 'none';
+        }}
+      >
+        Explore Chapter
+      </Link>
     </div>
   );
 }
@@ -180,29 +226,19 @@ function HomepageHeader() {
   };
 
   const titleStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '0.5rem',
+    textAlign: 'center',
     marginBottom: '1rem'
   };
 
-  const firstTitleStyle = {
-    background: 'linear-gradient(to right, #fde047, #fbbf24)',
+  const mainTitleStyle = {
+    background: 'linear-gradient(to right, #fde047, #fbbf24, #f59e0b)',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
     backgroundClip: 'text',
     fontSize: '2.5rem',
-    fontWeight: '800'
-  };
-
-  const secondTitleStyle = {
-    background: 'linear-gradient(to right, #fbbf24, #f59e0b)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-    fontSize: '2.5rem',
-    fontWeight: '800'
+    fontWeight: '800',
+    display: 'block',
+    whiteSpace: 'nowrap'
   };
 
   const taglineStyle = {
@@ -216,10 +252,9 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero', styles.heroBanner)} style={heroStyle}>
       <div className="container">
-        <div style={titleStyle}>
-          <span style={firstTitleStyle}>Physical AI &</span>
-          <span style={secondTitleStyle}>Humanoid Robotics</span>
-        </div>
+        <h1 className="hero__title" style={mainTitleStyle}>
+          Physical AI & Humanoid Robotics
+        </h1>
         <p className="hero__subtitle" style={taglineStyle}>
           {siteConfig.tagline}
         </p>
@@ -408,7 +443,6 @@ function ChapterCards() {
               lessons={chapter.lessons}
               outcomes={chapter.outcomes}
               chapterNumber={chapter.chapterNumber}
-              onClick={() => openModal(chapter)}
             />
           ))}
         </div>
