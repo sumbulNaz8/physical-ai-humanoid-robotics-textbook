@@ -1,0 +1,601 @@
+/**
+ * Custom CSS for Physical AI and Humanoid Robotics Textbook
+ * Black background with golden text theme
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #fbbf24; /* Golden yellow */
+  --ifm-color-primary-dark: #f59e0b;
+  --ifm-color-primary-darker: #d97706;
+  --ifm-color-primary-darkest: #b45309;
+  --ifm-color-primary-light: #fde68a;
+  --ifm-color-primary-lighter: #fef3c7;
+  --ifm-color-primary-lightest: #fffbeb;
+  --ifm-color-secondary: #1a1a1a; /* Dark background */
+  --ifm-background-color: #000000;
+  --ifm-font-color-base: #fbbf24;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(251, 191, 36, 0.1);
+
+  /* Custom colors for the theme */
+  --custom-black: #000000;
+  --custom-gold: #fbbf24;
+  --custom-gold-light: #fde68a;
+  --custom-gold-dark: #d97706;
+  --custom-amber: #f59e0b;
+  --custom-orange: #ea580c;
+  --custom-yellow: #fde047;
+  --custom-gray: #f0f0f0;
+  --custom-dark-gray: #333;
+  --custom-border-color: #444;
+}
+
+/* Dark theme - making it consistent with our black and gold theme */
+[data-theme='dark'] {
+  --ifm-color-primary: #fbbf24;
+  --ifm-color-primary-dark: #f59e0b;
+  --ifm-color-primary-darker: #d97706;
+  --ifm-color-primary-darkest: #b45309;
+  --ifm-color-primary-light: #fde68a;
+  --ifm-color-primary-lighter: #fef3c7;
+  --ifm-color-primary-lightest: #fffbeb;
+  --ifm-background-color: #000000;
+  --ifm-font-color-base: #fbbf24;
+  --docusaurus-highlighted-code-line-bg: rgba(251, 191, 36, 0.2);
+}
+
+/* Apply black background globally */
+body {
+  background-color: var(--custom-black) !important;
+  color: var(--custom-gold) !important;
+}
+
+/* Hero section styling */
+.hero--primary {
+  background: linear-gradient(135deg, var(--custom-black) 0%, #0d0d0d 100%) !important;
+  color: var(--custom-gold) !important;
+  padding: 6rem 0;
+  text-align: center;
+}
+
+.hero__title {
+  font-weight: 800;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero__title span:first-child {
+  background: linear-gradient(to right, var(--custom-gold), var(--custom-gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.hero__title span:last-child {
+  background: linear-gradient(to right, var(--custom-amber), var(--custom-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Keep the tagline text in a readable color */
+.hero__subtitle {
+  color: #94a3b8 !important; /* slate-400 */
+  margin-bottom: 2rem;
+}
+
+/* Buttons styling */
+.button--secondary {
+  background: linear-gradient(135deg, var(--custom-gold) 0%, var(--custom-gold-dark) 100%) !important;
+  color: var(--custom-black) !important;
+  border: none !important;
+  padding: 1rem 2rem !important;
+  font-size: 1.1rem !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+}
+
+.button--secondary:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 20px rgba(251, 191, 36, 0.3) !important;
+}
+
+/* Header and navigation styling */
+.navbar {
+  background: linear-gradient(135deg, #000000 0%, #0d0d0d 100%) !important;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  padding: 0.8rem 1.5rem;
+  backdrop-filter: blur(10px);
+  min-height: 60px;
+}
+
+.navbar__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.navbar__title {
+  display: none !important;
+}
+
+.navbar__brand {
+  display: none !important;
+}
+
+.navbar__logo {
+  display: none !important;
+}
+
+.navbar__items {
+  gap: 1.2rem;
+  justify-content: flex-end;
+}
+
+.navbar__item {
+  color: var(--custom-gold) !important;
+}
+
+.navbar__link {
+  color: var(--custom-gold) !important;
+  position: relative;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.navbar__link:hover {
+  color: var(--custom-gold-light) !important;
+  background-color: rgba(255, 215, 0, 0.1) !important;
+  transform: translateY(-2px);
+}
+
+.navbar__link:hover::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--custom-gold), transparent);
+  border-radius: 2px;
+}
+
+/* For the left side item (usually the brand), hide it */
+.navbar__item--left {
+  display: none !important;
+}
+
+/* Ensure proper alignment with only menu items on the right */
+.navbar__items--left {
+  display: none !important;
+}
+
+/* Search bar styling */
+/* Target the Docusaurus DocSearch component container */
+.navbar__item.navbar__link.navbar__search {
+  padding: 0;
+}
+
+.DocSearch {
+  --docsearch-searchbox-background: rgba(51, 51, 51, 0.7);
+  --docsearch-text-color: var(--custom-gold);
+  --docsearch-highlight-color: var(--custom-gold-light);
+  --docsearch-muted-color: #aaa;
+  --docsearch-container-background: rgba(0,0,0,0.8);
+  --docsearch-searchbox-shadow: none; /* Remove default shadow */
+  backdrop-filter: blur(10px);
+}
+
+.DocSearch-Button {
+  background: rgba(51, 51, 51, 0.7);
+  color: var(--custom-gold);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 20px; /* More rounded */
+  padding: 0.5rem 1rem 0.5rem 2.5rem; /* Adjust padding */
+  transition: all 0.3s ease-in-out;
+  backdrop-filter: blur(10px);
+  width: 280px;
+  position: relative;
+  font-size: 0.95rem;
+}
+
+.DocSearch-Button:hover {
+  background: rgba(40, 40, 40, 0.85);
+  color: var(--custom-gold-light);
+  border-color: rgba(255, 215, 0, 0.7);
+  width: 320px;
+}
+
+.DocSearch-Search-Icon, .DocSearch-LoadingIndicator, .DocSearch-MagnifierLabel {
+  color: var(--custom-gold);
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+}
+
+/* Fallback for native search input if Algolia is not used/configured */
+.navbar__search-input {
+  background-color: rgba(51, 51, 51, 0.7) !important;
+  color: var(--custom-gold) !important;
+  border: 1px solid rgba(255, 215, 0, 0.3) !important;
+  border-radius: 20px !important;
+  padding: 0.5rem 1rem 0.5rem 2.5rem !important;
+  width: 280px !important;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  font-size: 0.95rem;
+}
+
+.navbar__search-input::placeholder {
+  color: rgba(255, 215, 0, 0.6);
+}
+
+.navbar__search-input:focus {
+  outline: none;
+  border-color: rgba(255, 215, 0, 0.7) !important;
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+  width: 320px !important;
+  background-color: rgba(40, 40, 40, 0.85) !important;
+}
+
+.navbar__search-container {
+  position: relative;
+}
+
+.navbar__search-container svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 215, 0, 0.7) !important;
+  width: 18px;
+  height: 18px;
+}
+
+
+/* Custom styling for chapter cards */
+.chapter-card-section {
+  padding: 4rem 1rem;
+  background: var(--custom-black);
+}
+
+.chapter-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.chapter-card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+  border: 1px solid rgba(251, 191, 36, 0.3) !important;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  color: var(--custom-gold) !important;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.chapter-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(251, 191, 36, 0.2), 0 10px 10px -5px rgba(217, 119, 6, 0.1);
+  border-color: var(--custom-gold) !important;
+}
+
+.chapter-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.chapter-card__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--custom-gold) !important;
+  background: linear-gradient(to right, var(--custom-gold), var(--custom-amber));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.chapter-card__lessons {
+  font-size: 0.875rem;
+  color: var(--custom-gold) !important;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%) !important;
+  border: 1px solid rgba(251, 191, 36, 0.3) !important;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.chapter-card__outcomes {
+  flex-grow: 1;
+}
+
+.chapter-card__outcomes h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--custom-amber) !important;
+}
+
+.chapter-card__outcomes ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chapter-card__outcomes li {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+  display: flex;
+  align-items: flex-start;
+  color: #d1d5db !important; /* light gray for readability */
+}
+
+.chapter-card__outcomes li::before {
+  content: '✓';
+  color: var(--custom-gold) !important;
+  margin-right: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.chapter-card__link {
+  margin-top: 1.5rem;
+  font-weight: 600;
+  color: var(--custom-gold) !important;
+  text-decoration: none;
+  display: inline-block;
+  align-self: flex-start;
+  transition: color 0.3s ease;
+  background: linear-gradient(to right, var(--custom-gold), var(--custom-amber));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.chapter-card__link:hover {
+  color: var(--custom-gold-light) !important;
+  text-decoration: underline;
+  -webkit-text-fill-color: var(--custom-gold-light);
+  background: none;
+}
+
+/* Sidebar styling */
+.menu {
+  background-color: var(--custom-black) !important;
+  color: var(--custom-gold) !important;
+}
+
+.menu__list {
+  background-color: var(--custom-black) !important;
+}
+
+.menu__list-item {
+  color: var(--custom-gold) !important;
+}
+
+.menu__link {
+  color: var(--custom-gold) !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.menu__link:hover {
+  background-color: rgba(251, 191, 36, 0.2) !important;
+  color: var(--custom-gold-light) !important;
+}
+
+/* Active menu items */
+.menu__link--active:not(.menu__link--sublist) {
+  color: var(--custom-gold-light) !important;
+  background-color: rgba(251, 191, 36, 0.1) !important;
+  border-left: 3px solid var(--custom-gold) !important;
+}
+
+/* Category links */
+.menu__category {
+  color: var(--custom-gold) !important;
+  font-weight: 600;
+}
+
+/* Mobile sidebar */
+.navbar-sidebar {
+  background-color: var(--custom-black) !important;
+}
+
+.navbar-sidebar__items {
+  background-color: var(--custom-black) !important;
+}
+
+.navbar-sidebar__item {
+  color: var(--custom-gold) !important;
+}
+
+/* Ensure all doc pages have black background with gold text */
+.main-wrapper {
+  background-color: var(--custom-black) !important;
+  color: var(--custom-gold) !important;
+}
+
+/* Ensure doc content areas have proper styling */
+article {
+  background-color: var(--custom-black) !important;
+  color: var(--custom-gold) !important;
+}
+
+/* Style doc content specifically */
+.markdown {
+  background-color: var(--custom-black) !important;
+  color: var(--custom-gold) !important;
+}
+
+/* Specific styling for doc pages */
+.theme-doc-markdown {
+  background-color: var(--custom-black) !important;
+  color: var(--custom-gold) !important;
+}
+
+/* Ensure all headings are gold */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--custom-gold) !important;
+}
+
+/* Ensure text styling throughout */
+p, span, div, li, td, th {
+  color: var(--custom-gold) !important;
+}
+
+/* Specific styling for doc content */
+.theme-doc-content {
+  background-color: var(--custom-black) !important;
+  color: var(--custom-gold) !important;
+}
+
+/* Ensure code blocks maintain readability */
+.code-block {
+  background-color: var(--custom-dark-gray) !important;
+  color: var(--custom-gold) !important;
+  border: 1px solid rgba(251, 191, 36, 0.3) !important;
+}
+
+/* Specific code styling */
+.prism-code {
+  background-color: var(--custom-dark-gray) !important;
+  color: var(--custom-gold) !important;
+}
+
+/* Ensure links are readable */
+a {
+  color: var(--custom-gold-light) !important;
+}
+
+/* Tables styling */
+table {
+  background-color: var(--custom-dark-gray) !important;
+  border: 1px solid rgba(251, 191, 36, 0.3) !important;
+}
+
+table th, table td {
+  border: 1px solid rgba(251, 191, 36, 0.3) !important;
+  color: var(--custom-gold) !important;
+}
+
+/* Blockquotes and admonitions */
+.admonition {
+  border: 1px solid rgba(251, 191, 36, 0.3) !important;
+  background-color: rgba(26, 26, 26, 0.5) !important;
+}
+
+.admonition h5 {
+  color: var(--custom-gold) !important;
+}
+
+.admonition p {
+  color: var(--custom-gold) !important;
+}
+
+.admonition-note {
+  background-color: rgba(251, 191, 36, 0.1) !important;
+  border-color: rgba(251, 191, 36, 0.3) !important;
+}
+
+.admonition-tip {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+.admonition-caution {
+  background-color: rgba(245, 158, 11, 0.1) !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+.admonition-warning {
+  background-color: rgba(249, 115, 22, 0.1) !important;
+  border-color: rgba(249, 115, 22, 0.3) !important;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  color: var(--custom-gold-light) !important;
+}
+
+.breadcrumbs a {
+  color: var(--custom-gold-light) !important;
+}
+
+/* Pagination */
+.pagination-nav__link {
+  border: 1px solid rgba(251, 191, 36, 0.3) !important;
+  background-color: var(--custom-dark-gray) !important;
+  color: var(--custom-gold) !important;
+}
+
+.pagination-nav__link:hover {
+  border-color: var(--custom-gold) !important;
+  background-color: rgba(251, 191, 36, 0.1) !important;
+  color: var(--custom-gold-light) !important;
+}
+
+/* Doc item container */
+.docItemContainer {
+  background-color: var(--custom-black) !important;
+  color: var(--custom-gold) !important;
+}
+
+/* Container styling */
+.container {
+  background-color: var(--custom-black) !important;
+  color: var(--custom-gold) !important;
+}
+
+/* Theme content */
+.theme-content {
+  background-color: var(--custom-black) !important;
+  color: var(--custom-gold) !important;
+}
+
+/* Doc root */
+.DocRoot {
+  background-color: var(--custom-black) !important;
+}
+
+/* Doc content */
+.DocContent {
+  background-color: var(--custom-black) !important;
+}
+
+/* Doc item wrapper */
+.DocItem-wrapper {
+  background-color: var(--custom-black) !important;
+}
+
+/* Ensuring all text content maintains the gold color */
+.markdown a {
+  color: var(--custom-gold-light) !important;
+}
+
+.markdown a:hover {
+  color: var(--custom-gold) !important;
+}

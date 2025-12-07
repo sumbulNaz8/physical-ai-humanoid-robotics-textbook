@@ -1,0 +1,8 @@
+{
+  "label": "07 - Projects",
+  "position": 7,
+  "link": {
+    "type": "generated-index",
+    "description": "Hands-on projects to apply your knowledge in real-world robotics scenarios."
+  }
+}

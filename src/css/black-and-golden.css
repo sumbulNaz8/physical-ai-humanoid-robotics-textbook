@@ -1,0 +1,77 @@
+body.black-and-golden-layout {
+  background-color: #000000;
+  color: #ffd700; /* Golden */
+  font-family: 'Inter', sans-serif;
+}
+
+.black-and-golden-layout {
+  background-color: #000000;
+  color: #ffd700;
+}
+
+.golden-header {
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.golden-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffd700;
+  text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ffd700;
+}
+
+.golden-subtitle {
+  font-size: 1.25rem;
+  color: #f0e68c; /* Khaki */
+}
+
+.golden-main {
+  padding: 2rem 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.golden-card {
+  background-color: #1a1a1a;
+  border: 1px solid #ffd700;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  box-shadow: 0 10px 15px -3px rgba(255, 215, 0, 0.1), 0 4px 6px -2px rgba(255, 215, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.golden-card h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffd700;
+  margin-bottom: 1rem;
+}
+
+.golden-card ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.golden-card li {
+  color: #f0e68c;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #333;
+}
+
+.golden-card li:last-child {
+  border-bottom: none;
+}
+
+.golden-link {
+  color: #ffd700;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 1.5rem;
+  display: inline-block;
+}
+
+.golden-link:hover {
+  text-decoration: underline;
+}

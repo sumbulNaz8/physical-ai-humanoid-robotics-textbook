@@ -1,0 +1,51 @@
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: black;
+  color: gold;
+}
+
+.mainContent {
+  background: black;
+  color: gold;
+}
+
+.featuresSection {
+  padding: 3rem 0;
+  background: black;
+}
+
+.featureCard {
+  background: #111;
+  border: 1px solid gold;
+  border-radius: 8px;
+  padding: 1.5rem;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(255, 215, 0, 0.2);
+}
+
+.contentSection {
+  padding: 3rem 0;
+  background: black;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

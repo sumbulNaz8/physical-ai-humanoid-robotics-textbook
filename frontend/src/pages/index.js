@@ -10,16 +10,20 @@ import styles from './index.module.css';
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
+    <header
+      className={clsx('hero', styles.heroBanner)}
+      style={{ background: 'black', color: 'gold' }}
+    >
       <div className="container">
-        <Heading as="h1" className="hero__title">
+        <Heading as="h1" className="hero__title" style={{ color: 'gold' }}>
           {siteConfig.title}
         </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <p className="hero__subtitle" style={{ color: 'gold' }}>{siteConfig.tagline}</p>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/intro">
+            to="/docs/intro"
+            style={{ background: 'gold', color: 'black', borderColor: 'gold' }}>
             Docusaurus Tutorial - 5min ⏱️
           </Link>
         </div>
@@ -34,10 +38,12 @@ export default function Home() {
     <Layout
       title={`Hello from ${siteConfig.title}`}
       description="Description will go into a meta tag in <head />">
-      <HomepageHeader />
-      <main>
-        <HomepageFeatures />
-      </main>
+      <div style={{ background: 'black', minHeight: '100vh', color: 'gold' }}>
+        <HomepageHeader />
+        <main style={{ background: 'black', color: 'gold' }}>
+          <HomepageFeatures />
+        </main>
+      </div>
     </Layout>
   );
 }

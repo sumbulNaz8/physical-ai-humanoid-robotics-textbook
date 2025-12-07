@@ -1,0 +1,211 @@
+:root {
+  --doc-background-color: #f8f9fa;
+  --doc-sidebar-background: #ffffff;
+  --doc-text-color: #212529;
+  --doc-text-color-light: #6c757d;
+  --doc-border-color: #dee2e6;
+  --doc-primary-color: #007bff;
+  --doc-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme='dark'] {
+  --doc-background-color: #0f172a;
+  --doc-sidebar-background: #1e293b;
+  --doc-text-color: #f8f9fa;
+  --doc-text-color-light: #adb5bd;
+  --doc-border-color: #343a40;
+  --doc-primary-color: #80bfff;
+  --doc-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+.premium-doc-layout {
+  background-color: var(--doc-background-color);
+  color: var(--doc-text-color);
+  font-family: 'Inter', sans-serif;
+}
+
+.progress-bar-container {
+  position: sticky;
+  top: 60px; /* Docusaurus navbar height */
+  z-index: 100;
+  background-color: var(--doc-sidebar-background);
+  padding: 1rem;
+  box-shadow: var(--doc-shadow);
+}
+
+.doc-content-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.doc-sidebar {
+  background-color: var(--doc-sidebar-background);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: var(--doc-shadow);
+  height: fit-content;
+  position: sticky;
+  top: 160px; /* Adjust based on progress bar height + navbar */
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--doc-text-color);
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--doc-border-color);
+  padding-bottom: 1rem;
+}
+
+.sidebar-chapter-list li {
+  list-style: none;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-chapter-list a {
+  color: var(--doc-text-color-light);
+  font-weight: 500;
+  padding: 0.5rem;
+  display: block;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-chapter-list a:hover {
+  background-color: var(--doc-background-color);
+  color: var(--doc-text-color);
+  text-decoration: none;
+}
+
+.sidebar-chapter-list li.active a {
+  background-color: var(--doc-primary-color);
+  color: #ffffff;
+}
+
+.doc-main-content {
+  min-width: 0; /* Prevents overflow issues */
+}
+
+.doc-header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--doc-border-color);
+  padding-bottom: 1.5rem;
+}
+
+.doc-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--doc-text-color);
+}
+
+.lesson-list-container, .outcomes-container {
+  background-color: var(--doc-sidebar-background);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: var(--doc-shadow);
+  margin-bottom: 2rem;
+}
+
+.lesson-list-header, .outcomes-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--doc-text-color);
+  margin-bottom: 1rem;
+}
+
+.lesson-list li {
+  list-style: none;
+  border-bottom: 1px solid var(--doc-border-color);
+}
+
+.lesson-list a {
+  color: var(--doc-text-color-light);
+  display: block;
+  padding: 0.75rem 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.lesson-list a:hover {
+  background-color: var(--doc-background-color);
+  text-decoration: none;
+}
+
+.lesson-list li.active a {
+  color: var(--doc-primary-color);
+  font-weight: 700;
+}
+
+.outcomes-list {
+  padding-left: 1.5rem;
+}
+
+.outcomes-list li {
+  margin-bottom: 0.5rem;
+  color: var(--doc-text-color-light);
+}
+
+.prose-container {
+  background-color: var(--doc-sidebar-background);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  box-shadow: var(--doc-shadow);
+  line-height: 1.7;
+}
+
+.prose-container h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--doc-border-color);
+  padding-bottom: 0.5rem;
+}
+
+.prose-container p {
+  margin-bottom: 1rem;
+}
+
+.doc-nav-arrows {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  border-top: 1px solid var(--doc-border-color);
+  padding-top: 1.5rem;
+}
+
+.nav-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--doc-text-color-light);
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-arrow:hover {
+  background-color: var(--doc-sidebar-background);
+  color: var(--doc-text-color);
+  text-decoration: none;
+}
+
+@media (max-width: 996px) {
+  .doc-content-container {
+    grid-template-columns: 1fr;
+  }
+
+  .doc-sidebar {
+    position: static;
+    margin-bottom: 2rem;
+  }
+}
