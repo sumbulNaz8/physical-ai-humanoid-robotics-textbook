@@ -1,0 +1,41 @@
+# Physical AI and Humanoid Robotics Textbook - Claude Configuration
+
+## Project Overview
+This project is a comprehensive textbook on Physical AI and Humanoid Robotics, built using Docusaurus as a modern interactive learning platform. The content covers everything from fundamental concepts to advanced applications, including ROS2, NVIDIA Isaac Platform, and practical projects.
+
+## Context
+- **Project Name**: Physical AI & Humanoid Robotics Textbook
+- **Technology Stack**: Docusaurus, React, JavaScript/TypeScript
+- **Purpose**: Educational platform for robotics, AI, and humanoid robotics concepts
+- **Target Audience**: Students, engineers, and AI practitioners learning robotics
+
+## Key Directories
+- `/docs`: Contains the textbook content and documentation pages
+- `/src`: Source code for custom components and styling
+- `/blog`: Blog posts related to robotics and AI
+- `/static`: Static assets like images and documents
+
+## Important Files
+- `docusaurus.config.js`: Main configuration for the Docusaurus site
+- `sidebars.js`: Navigation sidebar configuration
+- `package.json`: Dependencies and scripts
+
+## Project Goals
+- Provide comprehensive educational content on Physical AI and Humanoid Robotics
+- Offer hands-on lessons and practical projects
+- Create an accessible learning platform for aspiring roboticists
+- Cover topics from basic ROS2 fundamentals to advanced NVIDIA Isaac platform usage
+
+## Special Instructions
+When working on this project:
+1. Maintain educational focus and clarity in explanations
+2. Follow Docusaurus documentation standards
+3. Keep code examples practical and educational
+4. Preserve the progressive learning approach from basic to advanced concepts
+5. Consider the diverse background of potential readers (students, engineers, researchers)
+
+## Technical Notes
+- Built with Docusaurus v3.9.2
+- Uses Ant Design components
+- Implements Tailwind CSS for styling
+- Includes search functionality via Algolia configuration
