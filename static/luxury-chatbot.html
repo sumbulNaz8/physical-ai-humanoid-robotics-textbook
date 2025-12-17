@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Physical AI & Humanoid Robotics Tutor</title>
+    <link rel="stylesheet" href="frontend/src/css/luxury-theme.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #121212 100%);
+            color: var(--lux-ivory);
+        }
+
+        .lux-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .lux-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+
+        .lux-title {
+            font-size: 2.5rem;
+            margin: 0;
+            background: var(--lux-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .lux-subtitle {
+            color: var(--lux-slate-light);
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .lux-chat-container {
+            height: 500px;
+            overflow-y: auto;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: var(--lux-card-bg);
+            border: 1px solid var(--lux-border);
+            backdrop-filter: blur(12px) saturate(180%);
+            box-shadow: var(--lux-shadow);
+        }
+
+        .lux-message {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 12px;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lux-user-message {
+            background: var(--lux-gold);
+            color: var(--lux-soft-black);
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .lux-bot-message {
+            background: var(--lux-card-bg);
+            border: 1px solid var(--lux-border);
+            color: var(--lux-ivory);
+            margin-right: auto;
+        }
+
+        .lux-input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .lux-question-input {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--lux-border);
+            background: var(--lux-card-bg);
+            color: var(--lux-ivory);
+            font-size: 1rem;
+        }
+
+        .lux-question-input:focus {
+            outline: none;
+            border-color: var(--lux-gold-solid);
+            box-shadow: var(--lux-glow);
+        }
+
+        .lux-send-btn {
+            padding: 15px 25px;
+            border-radius: 12px;
+            background: transparent;
+            color: var(--lux-gold-solid);
+            border: 1px solid var(--lux-gold-solid);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .lux-send-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: var(--lux-gold);
+            transition: all 0.4s;
+            z-index: -1;
+        }
+
+        .lux-send-btn:hover {
+            box-shadow: var(--lux-glow);
+            color: var(--lux-soft-black);
+        }
+
+        .lux-send-btn:hover::before {
+            width: 100%;
+        }
+
+        .lux-mode-selector {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .lux-mode-option {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--lux-border-subtle);
+            background: var(--lux-card-bg);
+            color: var(--lux-ivory);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lux-mode-option:hover {
+            border-color: var(--lux-gold-solid);
+        }
+
+        .lux-mode-option.active {
+            border-color: var(--lux-gold-solid);
+            box-shadow: var(--lux-glow);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .lux-footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--lux-slate-light);
+            font-size: 0.9rem;
+        }
+
+        .lux-typing-indicator {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 15px;
+            background: var(--lux-card-bg);
+            border: 1px solid var(--lux-border);
+            border-radius: 12px;
+        }
+
+        .lux-typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--lux-gold-solid);
+            border-radius: 50%;
+            margin: 0 3px;
+            animation: typing 1.4s infinite;
+        }
+
+        .lux-typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .lux-typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="lux-container">
+        <header class="lux-header">
+            <h1 class="lux-title">Physical AI & Humanoid Robotics Tutor</h1>
+            <p class="lux-subtitle">Your premium AI-powered learning companion</p>
+        </header>
+
+        <div class="lux-mode-selector">
+            <div class="lux-mode-option active" data-mode="chat">Chat</div>
+            <div class="lux-mode-option" data-mode="explain">Explain</div>
+            <div class="lux-mode-option" data-mode="translate">Translate</div>
+        </div>
+
+        <div class="lux-chat-container" id="lux-chat-container">
+            <div class="lux-message lux-bot-message">
+                Greetings! I'm your premium Physical AI & Humanoid Robotics tutor. How may I assist with your advanced robotics studies today?
+            </div>
+        </div>
+
+        <div class="lux-input-container">
+            <input type="text" id="lux-question-input" class="lux-question-input" placeholder="Ask a question about Physical AI & Humanoid Robotics..." />
+            <button id="lux-send-btn" class="lux-send-btn">Send</button>
+        </div>
+
+        <footer class="lux-footer">
+            <p>Premium AI Education Platform • Advanced Robotics Curriculum • Secure Learning Environment</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatContainer = document.getElementById('lux-chat-container');
+            const questionInput = document.getElementById('lux-question-input');
+            const sendBtn = document.getElementById('lux-send-btn');
+            const modeOptions = document.querySelectorAll('.lux-mode-option');
+
+            let currentMode = 'chat';
+
+            // Mode selection
+            modeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    modeOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    currentMode = this.getAttribute('data-mode');
+                });
+            });
+
+            // Function to add a message to the chat container
+            function addMessage(text, isUser) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('lux-message');
+                messageDiv.classList.add(isUser ? 'lux-user-message' : 'lux-bot-message');
+                messageDiv.textContent = text;
+                chatContainer.appendChild(messageDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+            // Function to show typing indicator
+            function showTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.classList.add('lux-message', 'lux-bot-message');
+                typingDiv.id = 'typing-indicator';
+                
+                const typingText = document.createElement('div');
+                typingText.classList.add('lux-typing-indicator');
+                
+                const dotsContainer = document.createElement('div');
+                dotsContainer.innerHTML = '<div class="lux-typing-dot"></div><div class="lux-typing-dot"></div><div class="lux-typing-dot"></div>';
+                
+                typingText.appendChild(dotsContainer);
+                typingDiv.appendChild(typingText);
+                
+                chatContainer.appendChild(typingDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                return typingDiv;
+            }
+
+            // Function to send question
+            async function sendQuestion() {
+                const question = questionInput.value.trim();
+                if (!question) return;
+
+                // Add user message to UI
+                addMessage(question, true);
+                questionInput.value = '';
+
+                // Show typing indicator
+                const typingIndicator = showTypingIndicator();
+
+                try {
+                    // Simulate API call with timeout for demo purposes
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    // Remove typing indicator
+                    typingIndicator.remove();
+
+                    // Add bot response (demo response)
+                    const botResponses = {
+                        chat: "Thank you for your question about Physical AI and Humanoid Robotics. Your premium AI tutor is analyzing your query and providing a comprehensive response based on the latest research in robotics.",
+                        explain: "I understand you'd like me to explain this concept in detail. Physical AI involves creating systems that understand and interact with the physical world. In humanoid robotics, this translates to robots that can perceive, reason about, and manipulate physical objects with human-like capabilities.",
+                        translate: "I can help translate robotics terminology between technical and accessible language. For example, 'forward kinematics' refers to calculating the position of a robot's end-effector based on joint angles, while 'inverse kinematics' solves the opposite problem."
+                    };
+                    
+                    addMessage(botResponses[currentMode] || botResponses.chat, false);
+                } catch (error) {
+                    // Remove typing indicator
+                    typingIndicator.remove();
+                    addMessage(`Connection error: ${error.message}`, false);
+                }
+            }
+
+            // Event listeners
+            sendBtn.addEventListener('click', sendQuestion);
+
+            questionInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendQuestion();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

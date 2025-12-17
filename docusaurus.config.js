@@ -74,6 +74,12 @@ const config = {
             label: 'Book Chapters',
           },
           {
+            to: '/chat',
+            label: 'Chatbot',
+            position: 'right',
+            className: 'header-chatbot-link',
+          },
+          {
             href: 'https://github.com/physical-ai-humanoid-robotics/textbook',
             label: 'GitHub',
             position: 'right',

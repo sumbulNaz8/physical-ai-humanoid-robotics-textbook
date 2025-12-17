@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "rootDir": "./",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
+    ]
+  },
+  "include": [
+    "./subagents/**/*.ts",
+    "./subagents/**/*.tsx",
+    "./app.jsx",
+    "./Chatbot.jsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

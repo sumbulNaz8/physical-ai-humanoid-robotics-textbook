@@ -1,0 +1,25 @@
+{
+  "name": "physical-ai-humanoid-robotics-textbook-backend",
+  "version": "1.0.0",
+  "description": "Backend API for the Physical AI & Humanoid Robotics textbook chatbot",
+  "main": "server.py",
+  "scripts": {
+    "start": "python server.py",
+    "dev": "python server.py",
+    "test": "python -c \"from agent import ask_agent; print(ask_agent('what is physical ai?', 'explain'))\""
+  },
+  "keywords": [
+    "ai",
+    "chatbot",
+    "physical-ai",
+    "humanoid-robotics",
+    "textbook"
+  ],
+  "author": "Physical AI Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^25.0.2",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3"
+  }
+}

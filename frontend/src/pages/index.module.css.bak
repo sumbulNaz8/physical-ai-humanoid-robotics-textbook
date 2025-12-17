@@ -1,0 +1,219 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: #0a0a0a;
+  color: #FEFDF8;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Login styles */
+.loginHero {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: #0a0a0a;
+  color: #FEFDF8;
+}
+
+.loginContainer {
+  background: rgba(30, 30, 30, 0.7);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  backdrop-filter: blur(12px) saturate(180%);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.loginForm {
+  width: 100%;
+}
+
+.loginTitle {
+  color: #D4AF37;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, #D4AF37 0%, #F7E7CE 50%, #B8860B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.inputGroup {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #D4AF37;
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  background-color: rgba(30, 30, 30, 0.7);
+  color: #FEFDF8;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #D4AF37;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+}
+
+.loginButton {
+  width: 100%;
+  padding: 0.8rem;
+  background: transparent;
+  color: #D4AF37;
+  border: 1px solid #D4AF37;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.loginButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(135deg, #D4AF37 0%, #F7E7CE 50%, #B8860B 100%);
+  transition: all 0.4s;
+  z-index: -1;
+}
+
+.loginButton:hover {
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+  color: #0a0a0a;
+}
+
+.loginButton:hover::before {
+  width: 100%;
+}
+
+.errorMessage {
+  background: rgba(30, 30, 30, 0.7);
+  color: #ff6b6b;
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid #ff6b6b;
+}
+
+.logoutButton {
+  padding: 0.8rem 1.5rem;
+  background: transparent;
+  color: #D4AF37;
+  border: 1px solid #D4AF37;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.logoutButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(135deg, #D4AF37 0%, #F7E7CE 50%, #B8860B 100%);
+  transition: all 0.4s;
+  z-index: -1;
+}
+
+.logoutButton:hover {
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+  color: #0a0a0a;
+}
+
+.logoutButton:hover::before {
+  width: 100%;
+}
+
+/* Dashboard styles */
+.mainContent {
+  background: #0a0a0a;
+  color: #FEFDF8;
+}
+
+.featuresSection {
+  padding: 3rem 0;
+  background: #0a0a0a;
+}
+
+.featureCard {
+  background: rgba(30, 30, 30, 0.7);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  height: 100%;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(12px) saturate(180%);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(212, 175, 55, 0.2);
+}
+
+.contentSection {
+  padding: 3rem 0;
+  background: #0a0a0a;
+  border-top: 1px solid rgba(127, 140, 141, 0.3);
+  border-bottom: 1px solid rgba(127, 140, 141, 0.3);
+}
+
+@media screen and (max-width: 996px) {
+  .loginHero {
+    padding: 2rem;
+  }
+
+  .loginContainer {
+    padding: 1.5rem;
+  }
+}
