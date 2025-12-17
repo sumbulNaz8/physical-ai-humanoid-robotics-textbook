@@ -32,8 +32,14 @@ const Chatbot = () => {
 
 
     try {
+      // Determine the API URL based on the environment
+      // For Vercel deployment, use a relative path that will be proxied
+      const apiUrl = typeof window !== 'undefined'
+        ? (process.env.REACT_APP_API_URL || '/api/ask')
+        : 'http://localhost:5000/ask';
+
       // Send request to backend API
-      const response = await fetch('http://localhost:5000/ask', {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
