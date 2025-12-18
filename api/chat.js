@@ -1,13 +1,20 @@
 import { CohereClient } from 'cohere-ai';
 
-// Initialize Cohere client
-const cohere = new CohereClient({
-  token: process.env.COHERE_API_KEY || "YOUR_COHERE_API_KEY_HERE",
-});
-
 // This function will process chat queries
 async function processChat(message) {
   try {
+    // Check if API key is available
+    const apiKey = process.env.COHERE_API_KEY;
+    if (!apiKey || apiKey === "YOUR_COHERE_API_KEY_HERE") {
+      // If API key is not set, provide a helpful response
+      return "AI service is not configured. Please set your COHERE_API_KEY in environment variables.";
+    }
+
+    // Initialize Cohere client only when needed
+    const cohere = new CohereClient({
+      token: apiKey,
+    });
+
     // For all inputs, treat as knowledge questions and respond in Urdu
     const response = await cohere.chat({
       message: `You are a QUESTION-ANSWERING AI, not a translation tool. Treat this input as a knowledge question: ${message}. Answer in Urdu with original explanation, not translation.`,
