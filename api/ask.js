@@ -1,4 +1,3 @@
-import { Configuration, OpenAIApi } from "openai";
 import { CohereClient } from 'cohere-ai';
 
 // Initialize Cohere client
@@ -6,29 +5,16 @@ const cohere = new CohereClient({
   token: process.env.COHERE_API_KEY || "YOUR_COHERE_API_KEY_HERE",
 });
 
-// This function will process the translation
+// This function will process the translation according to specified rules
 async function translateText(text) {
   try {
-    // Use Cohere to translate text to Urdu
+    // Use Cohere to generate an explanation in Urdu, not a translation of the text
     const response = await cohere.chat({
-      message: `Translate this to Urdu: ${text}. Provide only the translation, nothing else.`
+      message: `You are a QUESTION-ANSWERING AI, not a translation tool. Treat this input as a knowledge question: ${text}. Answer in Urdu with original explanation, not translation.`,
     });
 
-    // Extract only the translated part by removing potential explanations
-    let result = response.text;
-    
-    // Check if response contains Urdu characters
-    const urduPattern = /[\u0600-\u06FF\u200C-\u200D]+/;
-    if (urduPattern.test(result)) {
-      // Extract lines that contain Urdu text
-      const lines = result.split('\n');
-      const urduLines = lines.filter(line => urduPattern.test(line));
-      if (urduLines.length > 0) {
-        return urduLines.join(' ');
-      }
-    }
-    
-    return result;
+    // Return only the response text which should be an explanation in Urdu
+    return response.text;
   } catch (error) {
     console.error("Translation error:", error);
     return `Translation error: ${error.message}`;
@@ -38,12 +24,10 @@ async function translateText(text) {
 // This function will process chat queries
 async function chatWithText(query) {
   try {
-    // For chat mode, we'll use a simple response
-    // In a real application, you would implement your specific chat logic here
     const response = await cohere.chat({
       message: query,
     });
-    
+
     return response.text;
   } catch (error) {
     console.error("Chat error:", error);
@@ -57,7 +41,7 @@ async function explainConcept(concept) {
     const response = await cohere.chat({
       message: `Explain the following concept: ${concept}`,
     });
-    
+
     return response.text;
   } catch (error) {
     console.error("Explanation error:", error);
@@ -117,6 +101,7 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.error('API Error:', error);
+    // Ensure we always return a JSON response, even on error
     res.status(500).json({
       error: error.message || 'Internal server error',
     });
