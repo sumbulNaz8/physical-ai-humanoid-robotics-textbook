@@ -28,6 +28,7 @@ const config = {
     locales: ['en'],
   },
 
+  plugins: [],
   presets: [
     [
       'classic',
@@ -172,32 +173,31 @@ const config = {
         contextualSearch: true,
         // TODO: Fill in your actual Algolia `appId`, `apiKey`, and `indexName` for search to work.
       },
+      // SEO and meta tags configuration
+      headTags: [
+        {
+          tagName: 'meta',
+          attributes: {
+            name: 'keywords',
+            content: 'robotics, humanoid robotics, artificial intelligence, physical AI, ROS, NVIDIA Isaac, robotics textbook, robotics education, AI, machine learning'
+          }
+        },
+        {
+          tagName: 'meta',
+          attributes: {
+            name: 'author',
+            content: 'Physical AI and Humanoid Robotics Textbook'
+          }
+        },
+        {
+          tagName: 'meta',
+          attributes: {
+            name: 'robots',
+            content: 'index, follow'
+          }
+        }
+      ],
     }),
-
-    // SEO and meta tags configuration
-    headTags: [
-      {
-        tagName: 'meta',
-        attributes: {
-          name: 'keywords',
-          content: 'robotics, humanoid robotics, artificial intelligence, physical AI, ROS, NVIDIA Isaac, robotics textbook, robotics education, AI, machine learning'
-        }
-      },
-      {
-        tagName: 'meta',
-        attributes: {
-          name: 'author',
-          content: 'Physical AI and Humanoid Robotics Textbook'
-        }
-      },
-      {
-        tagName: 'meta',
-        attributes: {
-          name: 'robots',
-          content: 'index, follow'
-        }
-      }
-    ]
 };
 
 export default config;

@@ -11,26 +11,30 @@ load_dotenv()
 
 class Config:
     """Configuration class to manage application settings"""
-    
+
     # Cohere Configuration
     COHERE_API_KEY: str = os.getenv("COHERE_API_KEY", "")
     COHERE_MODEL: str = os.getenv("COHERE_MODEL", "command-r-08-2024")
     EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "embed-english-v3.0")
-    
+
     # Qdrant Configuration
     QDRANT_URL: str = os.getenv("QDRANT_URL", "https://462dfbac-266e-4b8c-9df8-b96019ef5c90.us-east4-0.gcp.cloud.qdrant.io:6333")
     QDRANT_API_KEY: str = os.getenv("QDRANT_API_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.rBzWonzS7A0Xkd12eU8LDr1BwDr_FS64Ug7wgvOpFGY")
     DEFAULT_COLLECTION_NAME: str = os.getenv("DEFAULT_COLLECTION_NAME", "physical-ai-humanoid-robotics-textbook")
-    
+
     # Application Configuration
     HOST: str = os.getenv("HOST", "0.0.0.0")
     PORT: int = int(os.getenv("PORT", "5000"))
     DEBUG: bool = os.getenv("DEBUG", "False").lower() == "true"
-    
+
     # RAG Configuration
     DEFAULT_RETRIEVAL_LIMIT: int = int(os.getenv("DEFAULT_RETRIEVAL_LIMIT", "5"))
     MAX_RETRIEVAL_LIMIT: int = int(os.getenv("MAX_RETRIEVAL_LIMIT", "100"))
-    
+
+    # Google Cloud Configuration for Translation API
+    GOOGLE_CLOUD_PROJECT_ID: str = os.getenv("GOOGLE_CLOUD_PROJECT_ID", "")
+
+
     # Embedding configuration
     EMBEDDING_VECTOR_SIZE: int = int(os.getenv("EMBEDDING_VECTOR_SIZE", "1024"))
 
@@ -62,6 +66,10 @@ def validate_config() -> tuple[bool, list[str]]:
     if Config.DEFAULT_RETRIEVAL_LIMIT > Config.MAX_RETRIEVAL_LIMIT:
         errors.append(f"DEFAULT_RETRIEVAL_LIMIT ({Config.DEFAULT_RETRIEVAL_LIMIT}) cannot be greater than MAX_RETRIEVAL_LIMIT ({Config.MAX_RETRIEVAL_LIMIT})")
     
+    # Validate Google Cloud Project ID
+    if not Config.GOOGLE_CLOUD_PROJECT_ID:
+        errors.append("GOOGLE_CLOUD_PROJECT_ID is not set.")
+
     return len(errors) == 0, errors
 
 
@@ -79,6 +87,7 @@ def print_config_summary():
     print(f"DEBUG: {Config.DEBUG}")
     print(f"DEFAULT_RETRIEVAL_LIMIT: {Config.DEFAULT_RETRIEVAL_LIMIT}")
     print(f"MAX_RETRIEVAL_LIMIT: {Config.MAX_RETRIEVAL_LIMIT}")
+    print(f"GOOGLE_CLOUD_PROJECT_ID set: {'Yes' if Config.GOOGLE_CLOUD_PROJECT_ID else 'No'}")
     print("="*50)
     
     if errors:

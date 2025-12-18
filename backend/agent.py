@@ -6,6 +6,7 @@ from config import Config
 cohere_client = cohere.Client(Config.COHERE_API_KEY) if Config.COHERE_API_KEY else None
 qdrant_client = QdrantClient(url=Config.QDRANT_URL, api_key=Config.QDRANT_API_KEY) if Config.QDRANT_URL else None
 
+
 def get_embedding(query):
     """
     Generates an embedding for a given query.
@@ -53,9 +54,30 @@ def answer_question(question, mode='chat', context=None):
         except Exception as e:
             return f"Error with Cohere chat: {e}"
     elif mode == 'translate':
+        # For translation mode, perform direct translation to Urdu only
         try:
-            response = cohere_client.chat(message=f"Translate the following text: {question}")
-            return response.text
+            # Direct and concise instruction to get only translation
+            response = cohere_client.chat(
+                message=f"Translate this to Urdu: {question}. Provide only the translation, nothing else."
+            )
+            # Extract only the translated part by removing potential explanations
+            result = response.text
+            # If the AI provided explanations, try to extract just the Urdu text
+            lines = result.split('\n')
+            urdu_lines = []
+            for line in lines:
+                # Check if line contains Urdu characters
+                import re
+                urdu_pattern = re.compile(r'[\u0600-\u06FF\u200C-\u200D]+')
+                if urdu_pattern.search(line):
+                    urdu_lines.append(line.strip())
+
+            # If we found Urdu text in separate lines, return just those
+            if urdu_lines:
+                return ' '.join(urdu_lines)
+            else:
+                # Otherwise return the original response
+                return result
         except Exception as e:
             return f"Error with Cohere translation: {e}"
     elif mode == 'explain':

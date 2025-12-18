@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
+import { useUser } from '../contexts/UserContext';
+import { Redirect } from '@docusaurus/router';
 
 import styles from './index.module.css';
 
@@ -459,12 +461,13 @@ function ChapterCards() {
 
 export default function Home() {
   const { siteConfig } = useDocusaurusContext();
+
   const pageStyle = {
     background: 'linear-gradient(135deg, #000000 0%, #0a0a0a 100%)',
     color: '#d1d5db',
     minHeight: '100vh'
   };
-  
+
   return (
     <Layout
       title={`Welcome to ${siteConfig.title}`}
