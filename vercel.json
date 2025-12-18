@@ -22,8 +22,8 @@
   ],
   "rewrites": [
     {
-      "source": "/ask",
-      "destination": "/api/ask"
+      "source": "/chat",
+      "destination": "/api/chat"
     },
     {
       "source": "/(.*)",

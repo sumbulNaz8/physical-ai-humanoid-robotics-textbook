@@ -123,17 +123,6 @@
             <button class="logout-btn" id="logoutBtn">Logout</button>
         </div>
 
-        <div class="mode-selector">
-            <label>
-                <input type="radio" name="mode" value="chat" checked> Chat
-            </label>
-            <label>
-                <input type="radio" name="mode" value="explain"> Explain
-            </label>
-            <label>
-                <input type="radio" name="mode" value="translate"> Translate
-            </label>
-        </div>
 
         <div class="chat-container" id="chat-container">
             <div class="message bot-message">
@@ -171,18 +160,11 @@
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }
 
-            // Function to get the selected mode
-            function getSelectedMode() {
-                const selectedMode = document.querySelector('input[name="mode"]:checked');
-                return selectedMode ? selectedMode.value : 'chat';
-            }
 
             // Function to send question to backend
             async function sendQuestion() {
                 const question = questionInput.value.trim();
                 if (!question) return;
-
-                const mode = getSelectedMode();
 
                 // Add user message to UI
                 addMessage(question, true);
@@ -197,15 +179,14 @@
                 chatContainer.scrollTop = chatContainer.scrollHeight;
 
                 try {
-                    // Send request to backend
-                    const response = await fetch('/ask', {
+                    // Send request to backend using the new /chat endpoint
+                    const response = await fetch('/chat', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            query: question,
-                            mode: mode
+                            message: question
                         })
                     });
 
@@ -223,8 +204,16 @@
                             addMessage('Sorry, I could not process your request.', false);
                         }
                     } else {
-                        const errorData = await response.json();
-                        addMessage(`Error: ${errorData.error || 'An error occurred'}`, false);
+                        // Try to get error details
+                        let errorDetails = 'An error occurred';
+                        try {
+                            const errorData = await response.json();
+                            errorDetails = errorData.error || errorDetails;
+                        } catch (e) {
+                            // If we can't parse the error, use the status text
+                            errorDetails = response.statusText || errorDetails;
+                        }
+                        addMessage(`Connection error: ${errorDetails}`, false);
                     }
                 } catch (error) {
                     // Remove loading message
@@ -233,7 +222,7 @@
                         loadingElement.remove();
                     }
 
-                    addMessage(`Connection error: ${error.message}`, false);
+                    addMessage('Service temporarily unavailable.', false);
                 }
             }
 
