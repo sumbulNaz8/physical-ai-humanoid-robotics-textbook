@@ -5,7 +5,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import { useUser } from '../contexts/UserContext';
-import { Redirect } from '@docusaurus/router';
+import { Navigate } from '@docusaurus/router';
 
 import styles from './index.module.css';
 
