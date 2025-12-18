@@ -22,8 +22,8 @@
   ],
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "YOUR_BACKEND_URL_HERE/:path*"
+      "source": "/ask",
+      "destination": "/api/ask"
     },
     {
       "source": "/(.*)",
