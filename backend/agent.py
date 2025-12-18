@@ -101,3 +101,28 @@ def ask_agent(query, mode='chat', collection=Config.DEFAULT_COLLECTION_NAME, lim
         context = retrieve_content(query, collection, limit)
 
     return answer_question(query, mode, context)
+
+
+if __name__ == "__main__":
+    # When run directly, demonstrate the agent's capabilities
+    print("Physical AI & Humanoid Robotics Agent")
+    print("=" * 50)
+
+    # Demonstrate different modes
+    print("\n1. CHAT MODE:")
+    result = ask_agent("What is the relationship between physical AI and humanoid robotics?", mode='chat')
+    print(result)
+
+    print("\n2. EXPLAIN MODE:")
+    result = ask_agent("embodied intelligence", mode='explain')
+    print(result)
+
+    print("\n3. TRANSLATE MODE (English to Urdu):")
+    try:
+        # Note: Translation output might not display correctly in all terminals due to encoding
+        result = ask_agent("Hello, how are you?", mode='translate')
+        print(f"Translation (may not display correctly in all terminals): {repr(result)}")
+    except Exception as e:
+        print(f"Translation failed due to terminal encoding: {e}")
+
+    print("\nAgent demonstration complete.")
