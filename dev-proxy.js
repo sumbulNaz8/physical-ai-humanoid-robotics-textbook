@@ -51,6 +51,21 @@ app.use('/health', createProxyMiddleware({
   changeOrigin: true,
 }));
 
+// Proxy auth requests to the auth server on port 8001
+app.use('/auth', createProxyMiddleware({
+  target: 'http://localhost:8001',
+  changeOrigin: true,
+  pathRewrite: {
+    '^/auth': '/auth' // Keep the /auth prefix to match the FastAPI routes
+  },
+  onProxyReq: (proxyReq, req, res) => {
+    console.log(`Proxying ${req.method} ${req.url} to http://localhost:8001`);
+  },
+  onProxyRes: (proxyRes, req, res) => {
+    console.log(`Received response from auth server: ${proxyRes.statusCode} for ${req.url}`);
+  }
+}));
+
 // Serve the Docusaurus build (assuming you have built it)
 app.use(express.static(path.join(__dirname, 'build')));
 

@@ -6,12 +6,14 @@ import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import PersonalizeButton from '../components/ContentPersonalizer/PersonalizeButton';
 import { PersonalizationProvider } from '../components/ContentPersonalizer/PersonalizeButton';
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 
 import styles from './ui-chapter.module.css';
 
 // Simple authentication utility functions
 const AuthUtils = {
   isLoggedIn: () => {
+    if (!ExecutionEnvironment.canUseDOM) return false;
     return localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
   },
 };
@@ -36,10 +38,13 @@ function UiChapterHeader() {
 export default function UiChapter() {
   const { siteConfig } = useDocusaurusContext();
   const [chapterContent, setChapterContent] = useState("");
-  const isLoggedIn = AuthUtils.isLoggedIn();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   // Initialize with elegant chapter content
   useEffect(() => {
+    setIsClient(true);
+
     const elegantContent = `# Premium User Interfaces for Robotics: Design and Implementation
 
 ## Executive Overview
@@ -90,6 +95,13 @@ Clear, elegant messaging when operations fail or encounter unexpected conditions
     setChapterContent(elegantContent);
   }, []);
 
+  // Check auth status on the client side
+  useEffect(() => {
+    if (isClient) {
+      setIsLoggedIn(AuthUtils.isLoggedIn());
+    }
+  }, [isClient]);
+
   // Handle content changes from personalization
   const handleContentChange = (newContent) => {
     setChapterContent(newContent);
@@ -103,7 +115,7 @@ Clear, elegant messaging when operations fail or encounter unexpected conditions
         <UiChapterHeader />
         <main className={styles.mainContent}>
           {/* Personalization Section - Only visible to logged-in users */}
-          {isLoggedIn && (
+          {isClient && isLoggedIn && (
             <PersonalizationProvider>
               <div className="container" style={{ textAlign: 'center', padding: '1.5rem 0' }}>
                 <PersonalizeButton
@@ -115,7 +127,7 @@ Clear, elegant messaging when operations fail or encounter unexpected conditions
             </PersonalizationProvider>
           )}
 
-          {!isLoggedIn && (
+          {isClient && !isLoggedIn && (
             <div className="container" style={{
               textAlign: 'center',
               padding: '2rem',
@@ -142,11 +154,11 @@ Clear, elegant messaging when operations fail or encounter unexpected conditions
                 <div className="col col--4">
                   <div className={clsx(styles.featureCard, 'lux-card')} style={{ height: '100%' }}>
                     <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-                      <div style={{ 
-                        width: '60px', 
-                        height: '60px', 
-                        margin: '0 auto 1rem', 
-                        borderRadius: '50%', 
+                      <div style={{
+                        width: '60px',
+                        height: '60px',
+                        margin: '0 auto 1rem',
+                        borderRadius: '50%',
                         background: 'var(--lux-gold)',
                         display: 'flex',
                         alignItems: 'center',
@@ -164,11 +176,11 @@ Clear, elegant messaging when operations fail or encounter unexpected conditions
                 <div className="col col--4">
                   <div className={clsx(styles.featureCard, 'lux-card')} style={{ height: '100%' }}>
                     <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-                      <div style={{ 
-                        width: '60px', 
-                        height: '60px', 
-                        margin: '0 auto 1rem', 
-                        borderRadius: '50%', 
+                      <div style={{
+                        width: '60px',
+                        height: '60px',
+                        margin: '0 auto 1rem',
+                        borderRadius: '50%',
                         background: 'var(--lux-emerald)',
                         display: 'flex',
                         alignItems: 'center',
@@ -186,11 +198,11 @@ Clear, elegant messaging when operations fail or encounter unexpected conditions
                 <div className="col col--4">
                   <div className={clsx(styles.featureCard, 'lux-card')} style={{ height: '100%' }}>
                     <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-                      <div style={{ 
-                        width: '60px', 
-                        height: '60px', 
-                        margin: '0 auto 1rem', 
-                        borderRadius: '50%', 
+                      <div style={{
+                        width: '60px',
+                        height: '60px',
+                        margin: '0 auto 1rem',
+                        borderRadius: '50%',
                         background: 'var(--lux-burgundy)',
                         display: 'flex',
                         alignItems: 'center',
@@ -230,21 +242,21 @@ Clear, elegant messaging when operations fail or encounter unexpected conditions
                           Critical controls are elegantly marked and require sophisticated confirmation
                         </p>
                       </div>
-                      
+
                       <div className="lux-card" style={{ padding: '1.2rem', backgroundColor: 'rgba(30, 30, 30, 0.5)' }}>
                         <h3 style={{ color: 'var(--lux-gold-solid)', margin: '0 0 0.5rem 0' }}>Real-Time Feedback Mastery:</h3>
                         <p style={{ color: 'var(--lux-ivory)', margin: 0 }}>
                           Robot states and sensor data are displayed with minimal latency
                         </p>
                       </div>
-                      
+
                       <div className="lux-card" style={{ padding: '1.2rem', backgroundColor: 'rgba(30, 30, 30, 0.5)' }}>
                         <h3 style={{ color: 'var(--lux-gold-solid)', margin: '0 0 0.5rem 0' }}>Intuitive Control Design:</h3>
                         <p style={{ color: 'var(--lux-ivory)', margin: 0 }}>
                           UI elements map logically to robot actions with responsive feedback
                         </p>
                       </div>
-                      
+
                       <div className="lux-card" style={{ padding: '1.2rem', backgroundColor: 'rgba(30, 30, 30, 0.5)' }}>
                         <h3 style={{ color: 'var(--lux-gold-solid)', margin: '0 0 0.5rem 0' }}>Error Handling Sophistication:</h3>
                         <p style={{ color: 'var(--lux-ivory)', margin: 0 }}>

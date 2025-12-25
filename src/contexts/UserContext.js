@@ -1,170 +1,110 @@
-// src/contexts/UserContext.js
-// Context provider for user authentication state
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-import React from 'react';
-import { AuthUtils } from '../utils/auth';
-
-// Initial state
-const initialState = {
-  user: null,
-  isAuthenticated: false,
-  loading: true
-};
-
-// Action types
-const actionTypes = {
-  SET_USER: 'SET_USER',
-  SET_LOADING: 'SET_LOADING',
-  LOGOUT: 'LOGOUT'
-};
-
-// Reducer function
-const userReducer = (state, action) => {
-  switch (action.type) {
-    case actionTypes.SET_USER:
-      return {
-        ...state,
-        user: action.payload,
-        isAuthenticated: !!action.payload,
-        loading: false
-      };
-    case actionTypes.SET_LOADING:
-      return {
-        ...state,
-        loading: action.payload
-      };
-    case actionTypes.LOGOUT:
-      return {
-        ...state,
-        user: null,
-        isAuthenticated: false,
-        loading: false
-      };
-    default:
-      return state;
-  }
-};
-
-// Create context
-const UserContext = React.createContext({
-  user: null,
-  isAuthenticated: false,
-  loading: true,
-  login: () => {},
-  logout: () => {},
-  register: () => {},
-  updateUser: () => {}
-});
-
-// Provider component
-export const UserProvider = ({ children }) => {
-  const [state, dispatch] = React.useReducer(userReducer, initialState);
-
-  // Check authentication status on mount
-  React.useEffect(() => {
-    const checkAuthStatus = async () => {
-      dispatch({ type: actionTypes.SET_LOADING, payload: true });
-
-      try {
-        const user = AuthUtils.getCurrentUser();
-        if (user) {
-          dispatch({ type: actionTypes.SET_USER, payload: user });
-        } else {
-          dispatch({ type: actionTypes.SET_LOADING, payload: false });
-        }
-      } catch (error) {
-        console.error('Error checking auth status:', error);
-        dispatch({ type: actionTypes.SET_LOADING, payload: false });
-      }
-    };
-
-    checkAuthStatus();
-
-    // Listen for storage changes (logout from another tab)
-    const handleStorageChange = (e) => {
-      if (e.key === 'currentUser' && e.newValue === null) {
-        dispatch({ type: actionTypes.LOGOUT });
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
-
-  // Login function
-  const login = async (userData, rememberMe = false) => {
-    try {
-      AuthUtils.login(userData, rememberMe);
-      dispatch({ type: actionTypes.SET_USER, payload: userData });
-      return { success: true };
-    } catch (error) {
-      console.error('Login error:', error);
-      return { success: false, error: error.message };
-    }
-  };
-
-  // Logout function
-  const logout = async () => {
-    try {
-      AuthUtils.logout();
-      dispatch({ type: actionTypes.LOGOUT });
-      return { success: true };
-    } catch (error) {
-      console.error('Logout error:', error);
-      return { success: false, error: error.message };
-    }
-  };
-
-  // Register function
-  const register = async (userData) => {
-    try {
-      const result = AuthUtils.register(userData);
-      if (result.success) {
-        dispatch({ type: actionTypes.SET_USER, payload: result.user });
-      }
-      return result;
-    } catch (error) {
-      console.error('Registration error:', error);
-      return { success: false, error: error.message };
-    }
-  };
-
-  // Update user function
-  const updateUser = async (updatedData) => {
-    try {
-      const result = AuthUtils.updateUserProfile(updatedData);
-      if (result.success) {
-        dispatch({ type: actionTypes.SET_USER, payload: result.user });
-      }
-      return result;
-    } catch (error) {
-      console.error('Update user error:', error);
-      return { success: false, error: error.message };
-    }
-  };
-
-  const contextValue = {
-    user: state.user,
-    isAuthenticated: state.isAuthenticated,
-    loading: state.loading,
-    login,
-    logout,
-    register,
-    updateUser
-  };
-
-  return React.createElement(
-    UserContext.Provider,
-    { value: contextValue },
-    children
-  );
-};
+// Create the user context
+const UserContext = createContext();
 
 // Custom hook to use the user context
 export const useUser = () => {
-  const context = React.useContext(UserContext);
+  const context = useContext(UserContext);
   if (!context) {
     throw new Error('useUser must be used within a UserProvider');
   }
   return context;
+};
+
+// User Provider Component
+export const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Check for existing user on component mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const userData = JSON.parse(storedUser);
+        setUser(userData);
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+      }
+    }
+    setLoading(false);
+  }, []);
+
+  // Function to sign in user
+  const signin = async (email, password) => {
+    try {
+      const response = await fetch('http://localhost:8001/auth/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Store user data in localStorage
+        localStorage.setItem('user', JSON.stringify(data));
+        setUser(data);
+        return { success: true };
+      } else {
+        return { success: false, error: data.detail || 'Signin failed' };
+      }
+    } catch (error) {
+      return { success: false, error: 'Network error' };
+    }
+  };
+
+  // Function to sign up user
+  const signup = async (userData) => {
+    try {
+      const response = await fetch('http://localhost:8001/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // For signup, redirect to signin page instead of setting user directly
+        return { success: true };
+      } else {
+        return { success: false, error: data.detail || 'Signup failed' };
+      }
+    } catch (error) {
+      return { success: false, error: 'Network error' };
+    }
+  };
+
+  // Function to sign out user
+  const signout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+  };
+
+  // Function to get current user data
+  const getCurrentUser = () => {
+    return user;
+  };
+
+  // Value object to provide to consumers
+  const value = {
+    user,
+    signin,
+    signup,
+    signout,
+    getCurrentUser,
+    loading
+  };
+
+  return (
+    <UserContext.Provider value={value}>
+      {children}
+    </UserContext.Provider>
+  );
 };

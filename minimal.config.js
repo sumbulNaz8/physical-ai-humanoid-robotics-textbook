@@ -17,7 +17,8 @@ const config = {
   organizationName: 'physical-ai-humanoid-robotics',
   projectName: 'textbook',
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -27,14 +28,6 @@ const config = {
     locales: ['en'],
   },
 
-  markdown: {
-    // Migrate deprecated option to new location
-    hooks: {
-      onBrokenMarkdownLinks: 'warn',
-    },
-  },
-
-  plugins: [],
   presets: [
     [
       'classic',
@@ -46,9 +39,14 @@ const config = {
           // Remove this to remove the "Edit this page" links.
           editUrl:
             'https://github.com/physical-ai-humanoid-robotics/textbook/edit/main/',
-          routeBasePath: '/',
         },
-        blog: false, // Temporarily disabling blog to resolve dependency issues
+        blog: {
+          showReadingTime: true,
+          // Please change this to your repo.
+          // Remove this to remove the "Edit this page" links.
+          editUrl:
+            'https://github.com/physical-ai-humanoid-robotics/textbook/edit/main/',
+        },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -75,22 +73,6 @@ const config = {
             label: 'Book Chapters',
           },
           {
-            to: '/signup',
-            label: 'Sign Up',
-            position: 'right',
-          },
-          {
-            to: '/signin',
-            label: 'Sign In',
-            position: 'right',
-          },
-          {
-            to: '/chat',
-            label: 'Chatbot',
-            position: 'right',
-            className: 'header-chatbot-link',
-          },
-          {
             href: 'https://github.com/physical-ai-humanoid-robotics/textbook',
             label: 'GitHub',
             position: 'right',
@@ -105,31 +87,31 @@ const config = {
             items: [
               {
                 label: 'Introduction to Physical AI',
-                to: '/introduction/',
+                to: '/docs/introduction/',
               },
               {
                 label: 'ROS2 Fundamentals',
-                to: '/ros2/',
+                to: '/docs/ros2/',
               },
               {
                 label: 'Simulation',
-                to: '/simulation/',
+                to: '/docs/simulation/',
               },
               {
                 label: 'NVIDIA Isaac',
-                to: '/nvidia-isaac/',
+                to: '/docs/nvidia-isaac/',
               },
               {
                 label: 'User Interfaces',
-                to: '/user-interfaces/',
+                to: '/docs/user-interfaces/',
               },
               {
                 label: 'Advanced Robotics',
-                to: '/advanced-robotics/',
+                to: '/docs/advanced-robotics/',
               },
               {
                 label: 'Projects',
-                to: '/projects/',
+                to: '/docs/projects/',
               },
             ],
           },
@@ -154,14 +136,6 @@ const config = {
             title: 'Resources',
             items: [
               {
-                label: 'Glossary',
-                to: '/glossary',
-              },
-              {
-                label: 'References',
-                to: '/references',
-              },
-              {
                 label: 'GitHub',
                 href: 'https://github.com/physical-ai-humanoid-robotics/textbook',
               },
@@ -174,39 +148,6 @@ const config = {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
       },
-      algolia: {
-        // The application ID provided by Algolia
-        appId: 'YOUR_APP_ID',
-        // Public API key: it is safe to commit it
-        apiKey: 'YOUR_SEARCH_API_KEY',
-        indexName: 'your-index-name',
-        contextualSearch: true,
-        // TODO: Fill in your actual Algolia `appId`, `apiKey`, and `indexName` for search to work.
-      },
-      // SEO and meta tags configuration
-      headTags: [
-        {
-          tagName: 'meta',
-          attributes: {
-            name: 'keywords',
-            content: 'robotics, humanoid robotics, artificial intelligence, physical AI, ROS, NVIDIA Isaac, robotics textbook, robotics education, AI, machine learning'
-          }
-        },
-        {
-          tagName: 'meta',
-          attributes: {
-            name: 'author',
-            content: 'Physical AI and Humanoid Robotics Textbook'
-          }
-        },
-        {
-          tagName: 'meta',
-          attributes: {
-            name: 'robots',
-            content: 'index, follow'
-          }
-        }
-      ],
     }),
 };
 

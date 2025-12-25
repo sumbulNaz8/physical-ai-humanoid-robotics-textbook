@@ -32,19 +32,8 @@ const Chatbot = () => {
 
 
     try {
-      // Determine the API URL based on the environment
-      let apiUrl = '/ask'; // Default for production/proxy
-      if (typeof window !== 'undefined') {
-        // In browser environment - for development with direct backend access
-        // This needs to be configured based on your setup
-        apiUrl = process.env.NODE_ENV === 'production' ? '/ask' : 'http://localhost:5000/ask';
-      } else {
-        // On server (during SSG/SSR)
-        apiUrl = 'http://localhost:5000/ask';
-      }
-
       // Send request to backend API
-      const response = await fetch(apiUrl, {
+      const response = await fetch('http://localhost:5000/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

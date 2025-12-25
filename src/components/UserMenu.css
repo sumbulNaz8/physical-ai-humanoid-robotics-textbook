@@ -1,0 +1,99 @@
+/* src/components/UserMenu.css */
+
+.user-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.user-info:hover {
+  background: rgba(30, 41, 59, 0.7);
+}
+
+.user-avatar {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.user-name {
+  font-weight: 500;
+  color: #fbbf24;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  min-width: 250px;
+  z-index: 100;
+  display: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-menu:hover .user-dropdown {
+  display: block;
+}
+
+.user-dropdown-content {
+  padding: 1rem;
+}
+
+.user-profile-summary {
+  margin-bottom: 1rem;
+}
+
+.user-profile-summary p {
+  margin: 0.5rem 0;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+}
+
+.user-profile-summary strong {
+  color: #fbbf24;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 0.5rem;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .user-dropdown {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 300px;
+  }
+}
+
+/* Dark mode support */
+html[data-theme='dark'] .user-dropdown {
+  background: rgba(15, 23, 42, 0.95);
+}

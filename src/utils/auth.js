@@ -1,6 +1,8 @@
 // src/utils/auth.js
 // Authentication utility functions for the Physical AI & Humanoid Robotics Textbook
 
+import { hashPassword, checkUsernameExists } from './authUtils';
+
 export const AuthUtils = {
   /**
    * Checks if a user is currently logged in
@@ -90,10 +92,28 @@ export const AuthUtils = {
    */
   register: (userData) => {
     try {
+      // Validate user data
+      if (!userData.username || userData.username.length < 3) {
+        return { success: false, error: 'Username must be at least 3 characters long' };
+      }
+
+      if (!userData.password || userData.password.length < 6) {
+        return { success: false, error: 'Password must be at least 6 characters long' };
+      }
+
+      // Check if username already exists
+      if (checkUsernameExists(userData.username)) {
+        return { success: false, error: 'Username already exists' };
+      }
+
+      // Hash the password
+      const hashedPassword = hashPassword(userData.password);
+
       // Add registration timestamp
       const user = {
         ...userData,
-        id: `user_${Date.now()}`,
+        id: `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`, // Generate unique ID
+        password: hashedPassword, // Store hashed password
         registeredAt: new Date().toISOString(),
         preferences: userData.preferences || {
           difficulty: 'standard',
@@ -101,11 +121,21 @@ export const AuthUtils = {
           interests: [],
           includeName: false,
           userName: userData.name || userData.username || ''
-        }
+        },
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days expiry
       };
 
       // Store user
       localStorage.setItem('currentUser', JSON.stringify(user));
+
+      // Add to all users list
+      const allUsers = JSON.parse(localStorage.getItem('allUsers') || '[]');
+      allUsers.push({
+        id: user.id,
+        username: user.username,
+        createdAt: user.createdAt
+      });
+      localStorage.setItem('allUsers', JSON.stringify(allUsers));
 
       return { success: true, user };
     } catch (error) {

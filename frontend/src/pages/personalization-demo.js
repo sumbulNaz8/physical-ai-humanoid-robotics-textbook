@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { PersonalizationProvider } from '../components/ContentPersonalizer/PersonalizeButton';
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 
 // Simple authentication utility functions
 const AuthUtils = {
   isLoggedIn: () => {
+    if (!ExecutionEnvironment.canUseDOM) return false;
     return localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
   },
 
   getCurrentUser: () => {
+    if (!ExecutionEnvironment.canUseDOM) return null;
     const userStr = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
     return userStr ? JSON.parse(userStr) : null;
   },
 
   login: (user, rememberMe = false) => {
+    if (!ExecutionEnvironment.canUseDOM) return;
     if (rememberMe) {
       localStorage.setItem('currentUser', JSON.stringify(user));
     } else {
@@ -21,11 +25,23 @@ const AuthUtils = {
   },
 
   logout: () => {
+    if (!ExecutionEnvironment.canUseDOM) return;
     localStorage.removeItem('currentUser');
     sessionStorage.removeItem('currentUser');
   },
 
   getUserPreferences: () => {
+    if (!ExecutionEnvironment.canUseDOM) {
+      // Default preferences when not on client
+      return {
+        difficulty: 'standard',
+        language: 'en',
+        interests: [],
+        includeName: false,
+        userName: ''
+      };
+    }
+
     const user = AuthUtils.getCurrentUser();
     if (user && user.preferences) {
       return user.preferences;
@@ -41,6 +57,10 @@ const AuthUtils = {
   },
 
   updateUserPreferences: (newPreferences) => {
+    if (!ExecutionEnvironment.canUseDOM) {
+      return { success: false, error: 'Not in browser environment' };
+    }
+
     const user = AuthUtils.getCurrentUser();
     if (!user) {
       console.error('No user found for updating preferences');

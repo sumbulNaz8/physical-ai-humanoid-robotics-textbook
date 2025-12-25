@@ -1,19 +1,33 @@
 import React, { useState, useContext } from 'react';
 import { WritingAgent } from '../../agents/writing_agent'; // Import the WritingAgent
 import { PersonalizationProcessor } from '../../utils/personalization-utilities';
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 
 // Simple authentication utility functions (replacing Better Auth)
 const AuthUtils = {
   isLoggedIn: () => {
+    if (!ExecutionEnvironment.canUseDOM) return false;
     return localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
   },
 
   getCurrentUser: () => {
+    if (!ExecutionEnvironment.canUseDOM) return null;
     const userStr = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
     return userStr ? JSON.parse(userStr) : null;
   },
 
   getUserPreferences: () => {
+    if (!ExecutionEnvironment.canUseDOM) {
+      // Default preferences when not on client
+      return {
+        difficulty: 'standard',
+        language: 'en',
+        interests: [],
+        includeName: false,
+        userName: ''
+      };
+    }
+
     const user = AuthUtils.getCurrentUser();
     if (user && user.preferences) {
       return user.preferences;
@@ -29,6 +43,10 @@ const AuthUtils = {
   },
 
   updateUserPreferences: (newPreferences) => {
+    if (!ExecutionEnvironment.canUseDOM) {
+      return { success: false, error: 'Not in browser environment' };
+    }
+
     const user = AuthUtils.getCurrentUser();
     if (!user) {
       console.error('No user found for updating preferences');
@@ -70,7 +88,18 @@ export const usePersonalization = () => {
 export const PersonalizationProvider = ({ children }) => {
   const [preferences, setPreferences] = useState(() => {
     // Initialize preferences from auth service or default
-    return AuthUtils.getUserPreferences();
+    if (ExecutionEnvironment.canUseDOM) {
+      return AuthUtils.getUserPreferences();
+    } else {
+      // Default preferences when not on client
+      return {
+        difficulty: 'standard',
+        language: 'en',
+        interests: [],
+        includeName: false,
+        userName: ''
+      };
+    }
   });
 
   const [personalizedContent, setPersonalizedContent] = useState(null);
@@ -100,8 +129,8 @@ const PersonalizeButton = ({ chapterContent, onContentChange, chapterTitle }) =>
   const { preferences } = usePersonalization();
 
   // Check if user is logged in
-  const isLoggedIn = AuthUtils.isLoggedIn();
-  const currentUser = AuthUtils.getCurrentUser();
+  const isLoggedIn = ExecutionEnvironment.canUseDOM ? AuthUtils.isLoggedIn() : false;
+  const currentUser = ExecutionEnvironment.canUseDOM ? AuthUtils.getCurrentUser() : null;
 
   // Log when personalization is applied
   const logPersonalization = (userName, preferences, chapterTitle) => {
@@ -147,6 +176,11 @@ const PersonalizeButton = ({ chapterContent, onContentChange, chapterTitle }) =>
    * Handle the click event for personalizing content
    */
   const handlePersonalizeClick = async () => {
+    if (!ExecutionEnvironment.canUseDOM) {
+      setError('Personalization only works in the browser.');
+      return;
+    }
+
     setIsProcessing(true);
     setError(null);
 

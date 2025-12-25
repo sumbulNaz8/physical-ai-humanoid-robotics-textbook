@@ -4,30 +4,27 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
-import { useUser } from '../contexts/UserContext';
-import { Navigate } from '@docusaurus/router';
-
 import styles from './index.module.css';
 
 function ChapterCard({ title, lessons, outcomes, chapterNumber, onClick }) {
   const chapterColors = {
-    1: { 
-      color: '#fde047', 
+    1: {
+      color: '#fde047',
       gradient: 'linear-gradient(135deg, #fde047 0%, #fbbf24 100%)',
       boxShadow: '0 0 15px rgba(253, 224, 71, 0.3)'
     },
-    2: { 
-      color: '#fbbf24', 
+    2: {
+      color: '#fbbf24',
       gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
       boxShadow: '0 0 15px rgba(251, 191, 36, 0.3)'
     },
-    3: { 
-      color: '#f59e0b', 
+    3: {
+      color: '#f59e0b',
       gradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
       boxShadow: '0 0 15px rgba(245, 158, 11, 0.3)'
     },
-    4: { 
-      color: '#d97706', 
+    4: {
+      color: '#d97706',
       gradient: 'linear-gradient(135deg, #d97706 0%, #b45309 100%)',
       boxShadow: '0 0 15px rgba(217, 119, 6, 0.3)'
     }
@@ -181,7 +178,7 @@ function Modal({ chapter, onClose }) {
   return (
     <div style={modalStyle}>
       <div style={contentStyle}>
-        <button 
+        <button
           onClick={onClose}
           style={{
             position: 'absolute',
@@ -217,7 +214,7 @@ function Modal({ chapter, onClose }) {
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
-  
+
   const heroStyle = {
     background: 'linear-gradient(135deg, #000000 0%, #0a0a0a 100%)',
     color: '#fbbf24',
@@ -450,9 +447,9 @@ function ChapterCards() {
         </div>
       </div>
       {modalOpen && selectedChapter && (
-        <Modal 
-          chapter={selectedChapter} 
-          onClose={() => setModalOpen(false)} 
+        <Modal
+          chapter={selectedChapter}
+          onClose={() => setModalOpen(false)}
         />
       )}
     </section>

@@ -3,6 +3,8 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
+import { AuthProvider, AuthModal } from '../components/AuthModal';
+import LogoutButton from '../components/LogoutButton';
 
 import Heading from '@theme/Heading';
 import styles from './index.module.css';
@@ -35,15 +37,21 @@ function HomepageHeader() {
 export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
-      <div style={{ background: 'black', minHeight: '100vh', color: 'gold' }}>
-        <HomepageHeader />
-        <main style={{ background: 'black', color: 'gold' }}>
-          <HomepageFeatures />
-        </main>
-      </div>
-    </Layout>
+    <AuthProvider>
+      <Layout
+        title={`Hello from ${siteConfig.title}`}
+        description="Description will go into a meta tag in <head />">
+        <div style={{ background: 'black', minHeight: '100vh', color: 'gold' }}>
+          <HomepageHeader />
+          <div style={{ padding: '1rem', display: 'flex', justifyContent: 'flex-end' }}>
+            <LogoutButton />
+          </div>
+          <main style={{ background: 'black', color: 'gold' }}>
+            <HomepageFeatures />
+          </main>
+        </div>
+        <AuthModal />
+      </Layout>
+    </AuthProvider>
   );
 }
